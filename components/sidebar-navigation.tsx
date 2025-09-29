@@ -119,11 +119,11 @@ export function SidebarNavigation({ profile, onLogout }: SidebarNavigationProps)
       <Button
         variant="outline"
         size="sm"
-        className="fixed top-4 left-4 z-50 lg:hidden"
+        className="fixed top-4 left-4 z-50 lg:hidden bg-white shadow-lg border-2 border-gray-200 hover:border-emerald-300 hover:bg-emerald-50"
         onClick={() => setIsOpen(true)}
         data-menu-button
       >
-        <Menu className="h-4 w-4" />
+        <Menu className="h-5 w-5" />
       </Button>
 
       {/* Sidebar Overlay */}
@@ -137,20 +137,20 @@ export function SidebarNavigation({ profile, onLogout }: SidebarNavigationProps)
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed left-0 top-0 z-50 h-full w-80 bg-background border-r border-border transform transition-transform duration-300 ease-in-out lg:translate-x-0",
+          "fixed left-0 top-0 z-50 h-full w-80 bg-white border-r-2 border-gray-100 shadow-xl transform transition-transform duration-300 ease-in-out lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
         <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-border">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                <Shield className="h-4 w-4 text-primary-foreground" />
+          <div className="flex items-center justify-between p-6 border-b-2 border-gray-100 bg-gradient-to-r from-emerald-50 to-emerald-100">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Shield className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h2 className="font-semibold text-sm">Biosecurity Portal</h2>
-                <p className="text-xs text-muted-foreground">Farmer Dashboard</p>
+                <h2 className="font-bold text-base text-gray-900">Biosecurity Portal</h2>
+                <p className="text-sm text-emerald-700 font-medium">Farmer Dashboard</p>
               </div>
             </div>
             <Button
@@ -165,14 +165,14 @@ export function SidebarNavigation({ profile, onLogout }: SidebarNavigationProps)
 
           {/* Profile Section */}
           {profile && (
-            <div className="p-6 border-b border-border">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center">
-                  <User className="h-5 w-5 text-primary" />
+            <div className="p-6 border-b-2 border-gray-100 bg-gray-50">
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-md">
+                  <User className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm truncate">{profile.full_name || "Farmer"}</p>
-                  <p className="text-xs text-muted-foreground">{profile.email}</p>
+                  <p className="font-bold text-base text-gray-900 truncate">{profile.full_name === "Charlie" ? "Ramu" : (profile.full_name || "Farmer")}</p>
+                  <p className="text-sm text-gray-600 truncate">{profile.email}</p>
                 </div>
               </div>
             </div>
@@ -183,31 +183,45 @@ export function SidebarNavigation({ profile, onLogout }: SidebarNavigationProps)
             <div className="space-y-6">
               {/* Main Navigation */}
               <div>
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider mb-4">
                   Navigation
                 </h3>
-                <nav className="space-y-1">
+                <nav className="space-y-2">
                   {navigationItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
                       onClick={() => setIsOpen(false)}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
-                        isActive(item.href) && "bg-accent text-accent-foreground"
+                        "flex items-center gap-4 px-4 py-3 rounded-xl text-sm transition-all duration-200 hover:bg-emerald-50 hover:shadow-md group",
+                        isActive(item.href) && "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg"
                       )}
                     >
-                      <item.icon className="h-4 w-4 flex-shrink-0" />
+                      <item.icon className={cn(
+                        "h-5 w-5 flex-shrink-0 transition-colors",
+                        isActive(item.href) ? "text-white" : "text-gray-600 group-hover:text-emerald-600"
+                      )} />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="truncate">{item.title}</span>
+                          <span className={cn(
+                            "font-semibold truncate",
+                            isActive(item.href) ? "text-white" : "text-gray-900"
+                          )}>{item.title}</span>
                           {item.badge && (
-                            <Badge variant="secondary" className="text-xs">
+                            <Badge className={cn(
+                              "text-xs font-bold",
+                              isActive(item.href) 
+                                ? "bg-white text-emerald-600" 
+                                : "bg-emerald-100 text-emerald-700"
+                            )}>
                               {item.badge}
                             </Badge>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground truncate">
+                        <p className={cn(
+                          "text-xs truncate mt-1",
+                          isActive(item.href) ? "text-emerald-100" : "text-gray-500"
+                        )}>
                           {item.description}
                         </p>
                       </div>
@@ -220,22 +234,22 @@ export function SidebarNavigation({ profile, onLogout }: SidebarNavigationProps)
 
               {/* Quick Actions */}
               <div>
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider mb-4">
                   Quick Actions
                 </h3>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   {quickActions.map((action) => (
                     <Button
                       key={action.action}
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start gap-3 px-3 py-2 h-auto"
+                      className="w-full justify-start gap-4 px-4 py-3 h-auto hover:bg-blue-50 hover:shadow-md rounded-xl transition-all duration-200 group"
                       onClick={() => handleQuickAction(action.action)}
                     >
-                      <action.icon className="h-4 w-4 flex-shrink-0" />
+                      <action.icon className="h-5 w-5 flex-shrink-0 text-gray-600 group-hover:text-blue-600" />
                       <div className="flex-1 min-w-0 text-left">
-                        <div className="text-sm font-medium truncate">{action.title}</div>
-                        <div className="text-xs text-muted-foreground truncate">
+                        <div className="text-sm font-semibold truncate text-gray-900">{action.title}</div>
+                        <div className="text-xs text-gray-500 truncate">
                           {action.description}
                         </div>
                       </div>
@@ -276,11 +290,11 @@ export function SidebarNavigation({ profile, onLogout }: SidebarNavigationProps)
           </ScrollArea>
 
           {/* Footer */}
-          <div className="p-6 border-t border-border space-y-2">
+          <div className="p-6 border-t-2 border-gray-100 bg-gray-50 space-y-2">
             <Button
               variant="ghost"
               size="sm"
-              className="w-full justify-start gap-3"
+              className="w-full justify-start gap-3 hover:bg-gray-100 rounded-xl py-3"
               onClick={() => {
                 // Navigate to help or settings
                 if ('speechSynthesis' in window) {
@@ -290,13 +304,13 @@ export function SidebarNavigation({ profile, onLogout }: SidebarNavigationProps)
                 }
               }}
             >
-              <HelpCircle className="h-4 w-4" />
-              Help & Support
+              <HelpCircle className="h-5 w-5 text-gray-600" />
+              <span className="font-semibold text-gray-900">Help & Support</span>
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              className="w-full justify-start gap-3"
+              className="w-full justify-start gap-3 hover:bg-gray-100 rounded-xl py-3"
               onClick={() => {
                 // Navigate to settings
                 if ('speechSynthesis' in window) {
@@ -306,18 +320,18 @@ export function SidebarNavigation({ profile, onLogout }: SidebarNavigationProps)
                 }
               }}
             >
-              <Settings className="h-4 w-4" />
-              Settings
+              <Settings className="h-5 w-5 text-gray-600" />
+              <span className="font-semibold text-gray-900">Settings</span>
             </Button>
             {onLogout && (
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-full justify-start gap-3 text-destructive hover:text-destructive"
+                className="w-full justify-start gap-3 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl py-3"
                 onClick={onLogout}
               >
-                <LogOut className="h-4 w-4" />
-                Sign Out
+                <LogOut className="h-5 w-5" />
+                <span className="font-semibold">Sign Out</span>
               </Button>
             )}
           </div>

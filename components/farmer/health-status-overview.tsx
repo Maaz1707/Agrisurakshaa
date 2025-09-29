@@ -55,11 +55,18 @@ export function HealthStatusOverview({ farmerId }: HealthStatusOverviewProps) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {[...Array(4)].map((_, i) => (
-          <Card key={i} className="animate-pulse">
+          <Card key={i} className="animate-pulse border-2 border-gray-200">
             <CardContent className="p-6">
-              <div className="h-16 bg-muted rounded"></div>
+              <div className="flex items-center justify-between">
+                <div className="space-y-3 flex-1">
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-8 bg-gray-200 rounded w-1/2"></div>
+                  <div className="h-6 bg-gray-200 rounded w-1/3"></div>
+                </div>
+                <div className="w-12 h-12 bg-gray-200 rounded-xl"></div>
+              </div>
             </CardContent>
           </Card>
         ))}
@@ -68,64 +75,76 @@ export function HealthStatusOverview({ farmerId }: HealthStatusOverviewProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
       {/* Total Livestock */}
-      <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+      <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-2 border-emerald-200 hover:shadow-lg transition-all duration-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Total Livestock</p>
-              <p className="text-3xl font-bold text-primary">{stats.total}</p>
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-emerald-700 uppercase tracking-wide">Total Livestock</p>
+              <p className="text-4xl font-bold text-emerald-800">{stats.total}</p>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="text-xs text-emerald-600 font-medium">All Animals</span>
+              </div>
             </div>
-            <Heart className="h-8 w-8 text-primary" />
+            <div className="bg-emerald-500 p-3 rounded-xl shadow-lg">
+              <Heart className="h-8 w-8 text-white" />
+            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Healthy */}
-      <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+      <Card className="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 hover:shadow-lg transition-all duration-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Healthy</p>
-              <p className="text-3xl font-bold text-green-600">{stats.healthy}</p>
-              <Badge variant="secondary" className="mt-1 bg-green-100 text-green-700">
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-green-700 uppercase tracking-wide">Healthy</p>
+              <p className="text-4xl font-bold text-green-800">{stats.healthy}</p>
+              <Badge className="bg-green-500 text-white font-semibold px-3 py-1 rounded-full">
                 {getHealthPercentage(stats.healthy)}%
               </Badge>
             </div>
-            <CheckCircle className="h-8 w-8 text-green-600" />
+            <div className="bg-green-500 p-3 rounded-xl shadow-lg">
+              <CheckCircle className="h-8 w-8 text-white" />
+            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Sick */}
-      <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
+      <Card className="bg-gradient-to-br from-amber-50 to-amber-100 border-2 border-amber-200 hover:shadow-lg transition-all duration-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Sick</p>
-              <p className="text-3xl font-bold text-yellow-600">{stats.sick}</p>
-              <Badge variant="secondary" className="mt-1 bg-yellow-100 text-yellow-700">
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-amber-700 uppercase tracking-wide">Sick</p>
+              <p className="text-4xl font-bold text-amber-800">{stats.sick}</p>
+              <Badge className="bg-amber-500 text-white font-semibold px-3 py-1 rounded-full">
                 {getHealthPercentage(stats.sick)}%
               </Badge>
             </div>
-            <AlertTriangle className="h-8 w-8 text-yellow-600" />
+            <div className="bg-amber-500 p-3 rounded-xl shadow-lg">
+              <AlertTriangle className="h-8 w-8 text-white" />
+            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Critical (Quarantine + Deceased) */}
-      <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
+      <Card className="bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 hover:shadow-lg transition-all duration-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Critical</p>
-              <p className="text-3xl font-bold text-red-600">{stats.quarantine + stats.deceased}</p>
-              <Badge variant="secondary" className="mt-1 bg-red-100 text-red-700">
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-red-700 uppercase tracking-wide">Critical</p>
+              <p className="text-4xl font-bold text-red-800">{stats.quarantine + stats.deceased}</p>
+              <Badge className="bg-red-500 text-white font-semibold px-3 py-1 rounded-full">
                 {getHealthPercentage(stats.quarantine + stats.deceased)}%
               </Badge>
             </div>
-            <XCircle className="h-8 w-8 text-red-600" />
+            <div className="bg-red-500 p-3 rounded-xl shadow-lg">
+              <XCircle className="h-8 w-8 text-white" />
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -37,17 +37,17 @@ export function DashboardHeader({ profile }: DashboardHeaderProps) {
       <SidebarNavigation profile={profile} onLogout={handleSignOut} />
       
       {/* Header */}
-      <header className="bg-card border-b border-border shadow-sm lg:ml-80">
-        <div className="container mx-auto px-4 py-4">
+      <header className="bg-white border-b-2 border-gray-100 shadow-lg lg:ml-80">
+        <div className="container mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
             {/* Logo and Title */}
-            <div className="flex items-center gap-3">
-              <div className="bg-primary/10 p-2 rounded-lg">
-                <Tractor className="h-6 w-6 text-primary" />
+            <div className="flex items-center gap-4">
+              <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 p-3 rounded-xl shadow-md">
+                <Tractor className="h-7 w-7 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">Digital Biosecurity Portal</h1>
-                <p className="text-sm text-muted-foreground">
+                <h1 className="text-2xl font-bold text-gray-900">Digital Biosecurity Portal</h1>
+                <p className="text-base text-gray-600 font-medium">
                   {profile.farm_name ? `${profile.farm_name} Dashboard` : "Farmer Dashboard"}
                 </p>
               </div>
@@ -56,9 +56,9 @@ export function DashboardHeader({ profile }: DashboardHeaderProps) {
             {/* Right Side Actions */}
             <div className="flex items-center gap-4">
               {/* Notifications */}
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              <Button variant="ghost" size="icon" className="relative hover:bg-gray-100 rounded-xl p-3">
+                <Bell className="h-6 w-6 text-gray-600" />
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold shadow-lg">
                   3
                 </span>
               </Button>
@@ -66,15 +66,15 @@ export function DashboardHeader({ profile }: DashboardHeaderProps) {
               {/* User Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2 px-3">
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback>
-                        <AvatarInitials name={profile.full_name || profile.email} />
+                  <Button variant="ghost" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 rounded-xl transition-all duration-200">
+                    <Avatar className="h-10 w-10 border-2 border-emerald-200">
+                      <AvatarFallback className="bg-emerald-100 text-emerald-700 font-semibold">
+                        <AvatarInitials name={profile.full_name === "Charlie" ? "Ramu" : (profile.full_name || profile.email)} />
                       </AvatarFallback>
                     </Avatar>
                     <div className="text-left hidden md:block">
-                      <p className="text-sm font-medium">{profile.full_name || "Farmer"}</p>
-                      <p className="text-xs text-muted-foreground">{profile.email}</p>
+                      <p className="text-sm font-semibold text-gray-900">{profile.full_name === "Charlie" ? "Ramu" : (profile.full_name || "Farmer")}</p>
+                      <p className="text-xs text-gray-500">{profile.email}</p>
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
